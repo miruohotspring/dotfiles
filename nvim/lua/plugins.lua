@@ -20,7 +20,7 @@ vim.g['fern#default_hidden'] = true
 require('lazy').setup({
     -- colorscheme
     {
-        'tomsr/molokai',
+        'tomasr/molokai',
         config = function()
             vim.cmd [[
             try
