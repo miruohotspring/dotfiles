@@ -17,7 +17,7 @@ autocmd({ "BufReadPost" }, {
 })
 
 autocmd({ "BufWritePre" }, {
-    pattern = { "*.py", "*.tf", "*.tfvars" },
+    pattern = { "*.py", "*.tf", "*.tfvars", },
     callback = function()
         vim.lsp.buf.format { async = true }
     end,

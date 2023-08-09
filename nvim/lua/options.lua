@@ -4,6 +4,7 @@ local options = {
     number=true,                                                -- 行番号
     autoindent=true,                                            -- 改行時自動インデント
     softtabstop=4,                                              -- タブ空白文字数
+    tabstop = 4,                                                -- タブ文字の空白数
     shiftwidth=4,                                               -- 自動インデント時の空白数
     expandtab=true,                                             -- タブ文字を空白に変換
     scrolloff=5,                                                -- スクロール時の余白
