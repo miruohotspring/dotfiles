@@ -104,7 +104,7 @@ require('lazy').setup({
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
         'onsails/lspkind.nvim',
-        'glepnir/lspsaga.nvim',
+        'nvimdev/lspsaga.nvim',
     },
     -- Toggle Terminal
     {
@@ -122,9 +122,10 @@ require('lazy').setup({
             end
         end
     },
-    -- markdown preview
+    -- markdown
     {
         'iamcco/markdown-preview.nvim',
+        'mzlogin/vim-markdown-toc',
     },
     -- treesitter
     {
@@ -171,108 +172,71 @@ require('lazy').setup({
         ft = {"go", 'gomod'},
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
     },
+    -- Resize
+    {
+        "simeji/winresizer",
+    },
 })
 
 require('gitsigns').setup()
 require('mason').setup();
 require('mason-lspconfig').setup_handlers({ function(server)
+    local lspconfig = require('lspconfig')
     local opt = {
-        -- -- Function executed when the LSP server startup
-        -- on_attach = function(client, bufnr)
-            --   local opts = { noremap=true, silent=true }
-            --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-            --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-            -- end,
             capabilities = require('cmp_nvim_lsp').default_capabilities(
             vim.lsp.protocol.make_client_capabilities()
             ),
         }
-        require('lspconfig')[server].setup(opt)
-
-        -- additional settings
-        require('lspconfig').pyright.setup {
-            settings = {
-                python = {
-                    pythonPath = "python3",
-                    useLibraryCodeForTypes = true
-                }
-            }
-        }
-        require('lspconfig').terraformls.setup(opt)
+        lspconfig[server].setup(opt)
     end
 })
 
-require 'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "c", "lua", "vim", "help", "query" },
-
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
-
-    -- List of parsers to ignore installing (for "all")
-    ignore_install = { "javascript" },
-
-    ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-    -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-    highlight = {
-        enable = true,
-        -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-        -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-        -- the name of the parser)
-        -- list of language that will be disabled
-        disable = { "c", "rust", "markdown" },
-        -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-        disable = function(lang, buf)
-            local max_filesize = 100 * 1024 -- 100 KB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_filesize then
-                return true
-            end
-        end,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-}
-
+-- 自動補完
 local lspkind = require("lspkind")
 local cmp = require("cmp")
 cmp.setup({
-    snippet = {
-        expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-    sources = {
-        { name = "nvim_lsp" },
-        { name = "buffer" },
-    },
-    mapping = cmp.mapping.preset.insert({
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ['<C-l>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm { select = true },
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true
     }),
-    experimental = {
-        ghost_text = true,
-    },
-    formatting = {
-        format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
-    }
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'buffer' },
+  }),
+  formatting = {
+    format = lspkind.cmp_format({ with_text = false, maxwidth = 50 })
+  }
 })
 
-require('nvim-treesitter.configs').setup {
-    ignore_install = {
-        'markdown',
-    }
+vim.cmd [[
+  set completeopt=menuone,noinsert,noselect
+  highlight! default link CmpItemKind CmpItemMenuDefault
+]]
+
+-- 構文ハイライト
+require 'nvim-treesitter.configs'.setup {
+    ensure_installed = { "json", "tsx", "c", "lua", "vim", "help", "query" },
+    sync_install = false,
+    auto_install = true,
+    ignore_install = { "javascript" },
+
+    highlight = {
+        enable = true,
+        disable = { "markdown" },
+    },
 }
 
 vim.cmd [[

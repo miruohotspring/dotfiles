@@ -27,7 +27,7 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 -- New tab
 keymap("n", "te", ":tabedit<Return>", opts)
 -- 新しいタブを一番右に作る
-keymap("n", "gn", ":tabnew<Return>", opts)
+keymap("n", "gN", ":tabnew<Return>", opts)
 -- move tab
 keymap("n", "gh", "gT", opts)
 keymap("n", "gl", "gt", opts)
@@ -104,7 +104,6 @@ vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 -- vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 --   vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
 -- )
-
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
