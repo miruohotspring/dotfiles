@@ -5,10 +5,10 @@ SETUVAR --export AWS_REGION:ap\x2dnortheast\x2d1
 SETUVAR --export GHQ_SELECTOR:peco
 SETUVAR --export --path GOPATH:/Users/opm005795/go
 SETUVAR --export JAVA_HOME:/Library/Internet\x20Plug\x2dIns/JavaAppletPlugin\x2eplugin/Contents/Home
-SETUVAR __fish_initialized:3400
-SETUVAR _fisher_decors_2F_fish_2D_ghq_files:/Users/opm005795/\x2econfig/fish/functions/__ghq_repository_search\x2efish\x1e/Users/opm005795/\x2econfig/fish/conf\x2ed/ghq_key_bindings\x2efish\x1e/Users/opm005795/\x2econfig/fish/completions/ghq\x2efish
+SETUVAR __fish_initialized:3100
+SETUVAR _fisher_decors_2F_fish_2D_ghq_files:/home/miruo/\x2econfig/fish/functions/__ghq_repository_search\x2efish\x1e/home/miruo/\x2econfig/fish/conf\x2ed/ghq_key_bindings\x2efish\x1e/home/miruo/\x2econfig/fish/completions/ghq\x2efish
 SETUVAR _fisher_hasanozgan_2F_theme_2D_lambda_files:/Users/opm005795/\x2econfig/fish/functions/fish_prompt\x2efish\x1e/Users/opm005795/\x2econfig/fish/functions/fish_right_prompt\x2efish
-SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_peco_files:/Users/opm005795/\x2econfig/fish/functions/peco_kill\x2efish\x1e/Users/opm005795/\x2econfig/fish/functions/peco_select_history\x2efish
+SETUVAR _fisher_oh_2D_my_2D_fish_2F_plugin_2D_peco_files:/home/miruo/\x2econfig/fish/functions/peco_kill\x2efish\x1e/home/miruo/\x2econfig/fish/functions/peco_select_history\x2efish
 SETUVAR _fisher_oh_2D_my_2D_fish_2F_theme_2D_bobthefish_files:\x7e/\x2econfig/fish/functions/__bobthefish_colors\x2efish\x1e\x7e/\x2econfig/fish/functions/__bobthefish_display_colors\x2efish\x1e\x7e/\x2econfig/fish/functions/__bobthefish_glyphs\x2efish\x1e\x7e/\x2econfig/fish/functions/bobthefish_display_colors\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_greeting\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_mode_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_right_prompt\x2efish\x1e\x7e/\x2econfig/fish/functions/fish_title\x2efish
 SETUVAR _fisher_plugins:oh\x2dmy\x2dfish/theme\x2dbobthefish\x1ehasanozgan/theme\x2dlambda\x1eoh\x2dmy\x2dfish/plugin\x2dpeco\x1edecors/fish\x2dghq
 SETUVAR _fisher_upgraded_to_4_4:\x1d
@@ -40,4 +40,4 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:cyan\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/Users/opm005795/go/bin\x1e/opt/homebrew/opt/scala\x402\x2e12/bin\x1e/Users/opm005795/Library/Application\x20Support/Coursier/bin\x1e/opt/nvim\x2dmacos/bin
+SETUVAR fish_user_paths:/home/linuxbrew/\x2elinuxbrew/bin\x1e/usr/local/go/bin\x1e/Users/opm005795/go/bin\x1e/opt/homebrew/opt/scala\x402\x2e12/bin\x1e/Users/opm005795/Library/Application\x20Support/Coursier/bin\x1e/opt/nvim\x2dmacos/bin

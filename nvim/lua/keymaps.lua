@@ -18,6 +18,10 @@ vim.g.maplocalleader = " "
 --   command_mode = 'c',
 
 -- Normal --
+-- windows操作--
+keymap("i", "<C-f>", "<Right>", opts)
+keymap("i", "<C-b>", "<Left>", opts)
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
