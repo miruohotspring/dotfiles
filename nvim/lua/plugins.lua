@@ -164,6 +164,7 @@ require('lazy').setup({
             "ray-x/guihua.lua",
             "neovim/nvim-lspconfig",
             "nvim-treesitter/nvim-treesitter",
+            "dense-analysis/ale",
         },
         config = function()
             require("go").setup()
@@ -188,6 +189,16 @@ require('mason-lspconfig').setup_handlers({ function(server)
             ),
         }
         lspconfig[server].setup(opt)
+        -- additional settings
+        require('lspconfig').pyright.setup {
+            settings = {
+                python = {
+                    pythonPath = "python3",
+                    useLibraryCodeForTypes = true
+                }
+            }
+        }
+        require('lspconfig').terraformls.setup(opt)
     end
 })
 
@@ -239,6 +250,7 @@ require 'nvim-treesitter.configs'.setup {
     },
 }
 
+
 vim.cmd [[
 set updatetime=500
 set completeopt=menuone,noinsert,noselect
@@ -253,3 +265,15 @@ highlight CmpItemKindMethod guibg=NONE guifg=#C586C0
 highlight CmpItemKindVariable guibg=NONE guifg=#9CDCFE
 highlight CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
 ]]
+
+-- prettier
+vim.g["ale_fixers"] = {
+   typescript = {'prettier'},
+   typescriptreact = {'prettier'},
+   javascript = {'prettier'},
+   javascriptreact = {'prettier'},
+   css = {'prettier'},
+   vue = {'prettier'},
+}
+vim.g["ale_fix_on_save"] = 1
+vim.g["ale_javascript_prettier_use_local_config"] = 1
