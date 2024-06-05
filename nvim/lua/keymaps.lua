@@ -84,8 +84,8 @@ keymap("v", "v", "$h", opts)
 keymap("v", "<C-p>", '"0p', opts)
 
 -- Fern
-keymap("n", "<Leader>e", ":<C-u>Fern . -reveal=% <CR>",     { noremap = true, silent = true })
-keymap("n", "<Leader>E", ":<C-u>Fern %:h -reveal=% <CR>",   { noremap = true, silent = true })
+keymap("n", "<Leader>e", ":<C-u>Fern . -drawer<CR>",     { noremap = true, silent = true })
+keymap("n", "<Leader>E", ":<C-u>Fern %:h -drawer<CR>",   { noremap = true, silent = true })
 
 -- lazygit
 keymap("n", "<Leader>lg", ":<C-u>lua _lazygit_toggle() <CR>",       { noremap = true, silent = true })

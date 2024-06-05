@@ -177,6 +177,12 @@ require('lazy').setup({
     {
         "simeji/winresizer",
     },
+    {
+        "mattn/vim-sqlfmt",
+    },
+    {
+        "mattn/vim-maketable",
+    }
 })
 
 require('gitsigns').setup()
@@ -200,6 +206,19 @@ require('mason-lspconfig').setup_handlers({ function(server)
         }
         require('lspconfig').terraformls.setup(opt)
     end
+})
+
+require('lspconfig').biome.setup({
+  on_attach = on_attach, -- 各自設定して～
+  cmd = { "biome", "lsp-proxy" },
+  on_new_config = function(new_config)
+    local pnpm = lspconfig.util.root_pattern("pnpm-lock.yml", "pnpm-lock.yaml")(vim.api.nvim_buf_get_name(0))
+    local cmd = { "npx", "biome", "lsp-proxy" }
+    if pnpm then
+      cmd = { "pnpm", "biome", "lsp-proxy" }
+    end
+    new_config.cmd = cmd
+  end,
 })
 
 -- 自動補完
@@ -239,7 +258,7 @@ vim.cmd [[
 
 -- 構文ハイライト
 require 'nvim-treesitter.configs'.setup {
-    ensure_installed = { "json", "tsx", "c", "lua", "vim", "help", "query" },
+    ensure_installed = { "json", "tsx", "c", "lua", "vim", "help", "query", "sql" },
     sync_install = false,
     auto_install = true,
     ignore_install = { "javascript" },
@@ -268,12 +287,11 @@ highlight CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
 
 -- prettier
 vim.g["ale_fixers"] = {
-   typescript = {'prettier'},
-   typescriptreact = {'prettier'},
-   javascript = {'prettier'},
-   javascriptreact = {'prettier'},
-   css = {'prettier'},
-   vue = {'prettier'},
+   typescript = {'biome'},
+   typescriptreact = {'biome'},
+   javascript = {'biome'},
+   javascriptreact = {'biome'},
+   vue = {'biome'},
 }
 vim.g["ale_fix_on_save"] = 1
 vim.g["ale_javascript_prettier_use_local_config"] = 1
