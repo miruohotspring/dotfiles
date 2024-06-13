@@ -41,4 +41,4 @@ SETUVAR fish_pager_color_description:B3A06D\x1eyellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:cyan\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/Users/opm005795/Library/pnpm\x1e/Users/opm005795/Library/Python/3\x2e9/bin\x1e/opt/homebrew/opt/libpq/bin\x1e/home/linuxbrew/\x2elinuxbrew/bin\x1e/usr/local/go/bin\x1e/Users/opm005795/go/bin\x1e/opt/homebrew/opt/scala\x402\x2e12/bin\x1e/Users/opm005795/Library/Application\x20Support/Coursier/bin\x1e/opt/nvim\x2dmacos/bin
+SETUVAR fish_user_paths:/Users/opm005795/Library/pnpm\x1e/Users/opm005795/Library/Python/3\x2e9/bin\x1e/opt/homebrew/opt/libpq/bin\x1e/home/linuxbrew/\x2elinuxbrew/bin\x1e/usr/local/go/bin\x1e/Users/opm005795/go/bin\x1e/opt/homebrew/opt/scala\x402\x2e12/bin\x1e/Users/opm005795/Library/Application\x20Support/Coursier/bin

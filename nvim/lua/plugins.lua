@@ -126,6 +126,9 @@ require('lazy').setup({
     {
         'iamcco/markdown-preview.nvim',
         'mzlogin/vim-markdown-toc',
+        build = "cd app && yarn install",
+        enabled = true,
+        ft = "markdown",
     },
     -- treesitter
     {
@@ -182,7 +185,17 @@ require('lazy').setup({
     },
     {
         "mattn/vim-maketable",
-    }
+    },
+    -- swagger
+    {
+      "vinnymeller/swagger-preview.nvim",
+      config = function()
+        require("swagger-preview").setup({
+          port = 8003,
+          host = "localhost",
+        })
+      end
+    },
 })
 
 require('gitsigns').setup()
@@ -205,21 +218,21 @@ require('mason-lspconfig').setup_handlers({ function(server)
             }
         }
         require('lspconfig').terraformls.setup(opt)
+				require('lspconfig').biome.setup({
+				  cmd = { "biome", "lsp-proxy" },
+				  on_new_config = function(new_config)
+				    local pnpm = lspconfig.util.root_pattern("pnpm-lock.yml", "pnpm-lock.yaml")(vim.api.nvim_buf_get_name(0))
+				    local cmd = { "npx", "biome", "lsp-proxy" }
+				    if pnpm then
+				      cmd = { "pnpm", "biome", "lsp-proxy" }
+				    end
+				    new_config.cmd = cmd
+				  end,
+				})
+        require('lspconfig').vacuum.setup({})
     end
 })
 
-require('lspconfig').biome.setup({
-  on_attach = on_attach, -- 各自設定して～
-  cmd = { "biome", "lsp-proxy" },
-  on_new_config = function(new_config)
-    local pnpm = lspconfig.util.root_pattern("pnpm-lock.yml", "pnpm-lock.yaml")(vim.api.nvim_buf_get_name(0))
-    local cmd = { "npx", "biome", "lsp-proxy" }
-    if pnpm then
-      cmd = { "pnpm", "biome", "lsp-proxy" }
-    end
-    new_config.cmd = cmd
-  end,
-})
 
 -- 自動補完
 local lspkind = require("lspkind")
@@ -261,7 +274,7 @@ require 'nvim-treesitter.configs'.setup {
     ensure_installed = { "json", "tsx", "c", "lua", "vim", "help", "query", "sql" },
     sync_install = false,
     auto_install = true,
-    ignore_install = { "javascript" },
+    ignore_install = { "help" },
 
     highlight = {
         enable = true,
@@ -295,3 +308,10 @@ vim.g["ale_fixers"] = {
 }
 vim.g["ale_fix_on_save"] = 1
 vim.g["ale_javascript_prettier_use_local_config"] = 1
+
+vim.filetype.add {
+  pattern = {
+    ['.*openapi.*%.ya?ml'] = 'yaml.openapi',
+    ['.*openapi.*%.json'] = 'json.openapi',
+  },
+}
