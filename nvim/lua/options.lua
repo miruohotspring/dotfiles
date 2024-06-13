@@ -40,3 +40,4 @@ vim.cmd([[hi! link LspReferenceRead CursorColumn]])
 vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
 
 vim.g.markdown_fenced_languages = {'java'}
+vim.opt.shell='fish'

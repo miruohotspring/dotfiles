@@ -90,6 +90,9 @@ keymap("n", "<Leader>E", ":<C-u>Fern %:h -drawer<CR>",   { noremap = true, silen
 -- lazygit
 keymap("n", "<Leader>lg", ":<C-u>lua _lazygit_toggle() <CR>",       { noremap = true, silent = true })
 
+-- ToggleTerm
+keymap("n", "<Leader>t", ":<C-u>ToggleTerm <CR>",       { noremap = true, silent = true })
+
 -- 2. build-in LSP function
 -- keyboard shortcut
 vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
