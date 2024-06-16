@@ -218,17 +218,26 @@ require('mason-lspconfig').setup_handlers({ function(server)
             }
         }
         require('lspconfig').terraformls.setup(opt)
-				require('lspconfig').biome.setup({
-				  cmd = { "biome", "lsp-proxy" },
-				  on_new_config = function(new_config)
-				    local pnpm = lspconfig.util.root_pattern("pnpm-lock.yml", "pnpm-lock.yaml")(vim.api.nvim_buf_get_name(0))
-				    local cmd = { "npx", "biome", "lsp-proxy" }
-				    if pnpm then
-				      cmd = { "pnpm", "biome", "lsp-proxy" }
-				    end
-				    new_config.cmd = cmd
-				  end,
-				})
+        require('lspconfig').biome.setup({
+          cmd = { "biome", "lsp-proxy" },
+          on_new_config = function(new_config)
+            local pnpm = lspconfig.util.root_pattern("pnpm-lock.yml", "pnpm-lock.yaml")(vim.api.nvim_buf_get_name(0))
+            local cmd = { "npx", "biome", "lsp-proxy" }
+            if pnpm then
+              cmd = { "pnpm", "biome", "lsp-proxy" }
+            end
+            new_config.cmd = cmd
+          end,
+          settings = {
+            biome = {
+              enableTsconfigPaths = true,  -- この行を追加
+              tsconfigPath = "tsconfig.json"  -- 必要に応じてパスを設定
+            }
+          },
+          on_attach = function(client, bufnr)
+            -- その他の設定やキーバインディングをここに追加
+          end,
+        })
         require('lspconfig').vacuum.setup({})
     end
 })

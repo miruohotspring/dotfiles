@@ -49,9 +49,8 @@ keymap("n", "x", '"_x', opts)
 -- Delete a word backwards
 -- keymap("n", "dw", 'vb"_d', opts)
 
--- 行の端に行く
-keymap("n", "<Leader>h", "^", opts)
-keymap("n", "<Leader>l", "$", opts)
+-- 水平分割でbufferを作る
+keymap("n", "<Leader>n", ":<C-u>below new<CR>", opts)
 
 -- ;でコマンド入力( ;と:を入れ替)
 -- keymap("n", ";", ":", opts)
@@ -98,10 +97,37 @@ keymap("n", "<Leader>t", ":<C-u>ToggleTerm <CR>",       { noremap = true, silent
 vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
 vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+vim.keymap.set('n', 'gd', function()
+  local params = vim.lsp.util.make_position_params()
+  vim.lsp.buf_request(0, 'textDocument/definition', params, function(err, result, ctx, config)
+    if err or not result or vim.tbl_isempty(result) then
+      return
+    end
+
+    if #result > 1 then
+      -- 定義が複数ある場合、分割して選択肢を表示する
+      vim.cmd('vs')
+      local items = vim.lsp.util.locations_to_items(result)
+      vim.fn.setqflist({}, ' ', { title = 'LSP Definitions', items = items })
+      vim.cmd('copen')
+    else
+      local def_location = result[1]
+      local uri = def_location.uri or def_location.targetUri
+      if not uri then
+        return
+      end
+
+      local bufnr = vim.uri_to_bufnr(uri)
+      if bufnr ~= 0 and bufnr ~= vim.api.nvim_get_current_buf() then
+        vim.cmd('vs')
+      end
+      vim.lsp.util.jump_to_location(def_location)
+    end
+  end)
+end)
 vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>')
 vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- vim.keymap.set('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 vim.keymap.set('n', 'gn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 -- vim.keymap.set('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 vim.keymap.set('n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>')
@@ -116,3 +142,6 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+-- ターミナルでescape
+vim.keymap.set('t', '<C-\\>', '<C-\\><C-N>')

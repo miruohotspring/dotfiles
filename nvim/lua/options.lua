@@ -23,6 +23,8 @@ local options = {
     list=true,
     listchars='tab:»-,trail:-,extends:»,precedes:«,nbsp:%',
     termguicolors=true,
+    splitright=true,
+    splitbelow=true,
 }
 
 vim.opt.shortmess:append("c")
