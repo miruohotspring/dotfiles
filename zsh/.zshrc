@@ -5,6 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+source /home/miruo/ghq/github.com/marlonrichert/zsh-autocomplete
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -28,9 +29,10 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
+zinit ice depth=1; zinit light romkatv/powerlevel10k
 export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+export PATH="$PATH:`npm prefix --location=global`/bin"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -38,6 +40,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # plugins
 zinit load zsh-users/zsh-autosuggestions
 zinit load zsh-users/zsh-completions
+zinit load zsh-users/zsh-syntax-highlighting
 
 # ctrl+g ghq
 function peco-cd-src () {
